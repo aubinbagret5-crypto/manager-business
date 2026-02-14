@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manager Invest</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<div id="logo">
+  <img src="https://i.ibb.co/2Z7k7yT/logo.png" alt="Logo Manager Invest">
+</div>
+
+<!-- Inscription -->
+<div id="signup-form">
+  <h2>Inscription</h2>
+  <input type="text" id="name" placeholder="Nom complet">
+  <input type="text" id="country-code" placeholder="Code pays">
+  <input type="text" id="phone" placeholder="Numéro">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Mot de passe">
+  <input type="text" id="referral" placeholder="Code parrain (facultatif)">
+  <button onclick="signup()">Créer un compte</button>
+  <p>Déjà un compte ? <a href="#" onclick="showLoginForm()">Connectez-vous</a></p>
+</div>
+
+<!-- Connexion -->
+<div id="login-form" style="display:none;">
+  <h2>Connexion</h2>
+  <input type="email" id="login-email" placeholder="Email">
+  <input type="password" id="login-password" placeholder="Mot de passe">
+  <button onclick="login()">Connexion</button>
+  <p>Pas encore de compte ? <a href="#" onclick="showSignupForm()">S'inscrire</a></p>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard" style="display:none;">
+
+  <!-- Accueil -->
+  <div id="home-section">
+    <h1>Bienvenue sur Manager Invest</h1>
+    <p>Solde : <span id="balance">0</span> FCFA</p>
+
+    <div class="home-images">
+      <img src="https://i.ibb.co/4jFZg1y/invest1.jpg" alt="Investissement 1">
+      <img src="https://i.ibb.co/fXjH7QV/invest2.jpg" alt="Investissement 2">
+      <img src="https://i.ibb.co/pK9X6Dd/invest3.jpg" alt="Investissement 3">
+    </div>
+
+    <button class="animated-btn" onclick="showDashboardSection('plan')">Voir Plans VIP</button>
+    <button class="animated-btn" onclick="showDashboardSection('menu')">Menu / Recharge / Retrait</button>
+  </div>
+
+  <!-- Plans VIP -->
+  <div id="plan-section" style="display:none;">
+    <h2>Plans VIP</h2>
+    <button class="back-btn" onclick="showDashboardSection('home')">← Retour</button>
+    <div id="plans-container">
+      <!-- Exemples de plans -->
+      <div class="plan" data-amount="2500">
+        <p>2 500 FCFA – Durée 30 jours – 600 FCFA/jour – Total 18 000 FCFA</p>
+        <button onclick="investPlan(2500)">Investir</button>
+      </div>
+      <div class="plan" data-amount="5000">
+        <p>5 000 FCFA – Durée 30 jours – 1 200 FCFA/jour – Total 36 000 FCFA</p>
+        <button onclick="investPlan(5000)">Investir</button>
+      </div>
+      <div class="plan" data-amount="7000">
+        <p>7 000 FCFA – Durée 30 jours – 1 680 FCFA/jour – Total 50 400 FCFA</p>
+        <button onclick="investPlan(7000)">Investir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu / Historique -->
+  <div id="menu-section" style="display:none;">
+    <h2>Menu / Historique</h2>
+    <button class="back-btn" onclick="showDashboardSection('home')">← Retour</button>
+
+    <table id="plans-table">
+      <thead>
+        <tr style="background:gold; color:black;">
+          <th>Plan</th><th>Montant</th><th>Durée</th><th>Revenus journaliers</th><th>Total</th><th>Investir</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2 500</td><td>2 500 FCFA</td><td>30 jours</td><td>600</td><td>18 000</td><td><button onclick="investPlan(2500)">Investir</button></td></tr>
+        <tr><td>5 000</td><td>5 000 FCFA</td><td>30 jours</td><td>1 200</td><td>36 000</td><td><button onclick="investPlan(5000)">Investir</button></td></tr>
+        <tr><td>7 000</td><td>7 000 FCFA</td><td>30 jours</td><td>1 680</td><td>50 400</td><td><button onclick="investPlan(7000)">Investir</button></td></tr>
+      </tbody>
+    </table>
+
+    <p style="text-align:center; font-weight:bold; color:gold; margin-top:15px;">
+      Investissez dès maintenant avec Manager Invest et sécurisez vos gains !<br>
+      Retrait minimum : 1 500 FCFA (Taxes 15%) | Retrait maximum : 500 000 FCFA | Dépôt minimum : 2 000 FCFA
+    </p>
+
+    <h3>Recharger votre compte</h3>
+    <input type="number" id="recharge-amount" placeholder="Montant à déposer">
+    <input type="text" id="recharge-network" placeholder="Réseau">
+    <input type="text" id="recharge-number" placeholder="Numéro mobile">
+    <button onclick="generateRechargeCode()">Continuer</button>
+    <div id="recharge-code-section" style="display:none;">
+      <p>Votre code de transfert : <span id="recharge-code"></span></p>
+      <input type="file" id="recharge-proof">
+      <button onclick="confirmRecharge()">Confirmer</button>
+      <p id="recharge-status"></p>
+    </div>
+
+    <h3>Retirer votre argent</h3>
+    <input type="number" id="withdraw-amount" placeholder="Montant à retirer">
+    <input type="text" id="withdraw-name" placeholder="Nom du compte">
+    <input type="text" id="withdraw-number" placeholder="Numéro de compte">
+    <input type="text" id="withdraw-network" placeholder="Réseau Mobile Money">
+    <input type="password" id="withdraw-pin" placeholder="Mot de passe de transaction">
+    <button onclick="withdrawFromMenu()">Retirer</button>
+
+    <h3>Historique des transactions</h3>
+    <ul id="history-list"></ul>
+  </div>
+</div>
+
+<div id="footer">
+  <button onclick="showDashboardSection('home')">Accueil</button>
+  <button onclick="showDashboardSection('plan')">Plan</button>
+  <button onclick="showDashboardSection('menu')">Menu</button>
+</div>
+
+</body>
+</html>
