@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Manager Invest</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth" class="center-box">
+<h2>Manager Invest</h2>
+
+<input type="text" id="name" placeholder="Nom complet">
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Mot de passe">
+
+<button onclick="signup()">S'inscrire</button>
+<p>Déjà un compte ?</p>
+<button onclick="login()">Connectez-vous</button>
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div id="success-screen" class="center-box" style="display:none;">
+<h2 id="success-message"></h2>
+<p>Veuillez continuer pour accéder à votre tableau de bord.</p>
+<button onclick="goToHome()">CONTINUER</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none;">
+
+<div id="home" class="section">
+<h2>ACCUEIL</h2>
+<p>Solde disponible :</p>
+<h3><span id="balance">0</span> FCFA</h3>
+<button onclick="recharge()">RECHARGER</button>
+<button onclick="withdraw()">RETIRER</button>
+</div>
+
+<div id="plan" class="section" style="display:none;">
+<h2>PLANS D'INVESTISSEMENT</h2>
+
+<div class="plan">
+<h3>VIP 1 - 5 000 FCFA</h3>
+<button onclick="invest(5000)">INVESTIR</button>
+</div>
+
+<div class="plan">
+<h3>VIP 2 - 20 000 FCFA</h3>
+<button onclick="invest(20000)">INVESTIR</button>
+</div>
+
+<div class="plan">
+<h3>VIP 3 - 50 000 FCFA</h3>
+<button onclick="invest(50000)">INVESTIR</button>
+</div>
+
+</div>
+
+<div id="menu" class="section" style="display:none;">
+<h2>MENU</h2>
+
+<h3>Historique des transactions</h3>
+<ul id="history"></ul>
+
+<h3>Lier une carte bancaire</h3>
+<input type="text" id="card" placeholder="Numéro de carte">
+<button onclick="linkCard()">LIER LA CARTE</button>
+</div>
+
+<!-- FOOTER -->
+<div id="footer">
+<button onclick="showSection('home')">ACCUEIL</button>
+<button onclick="showSection('plan')">PLAN</button>
+<button onclick="showSection('menu')">MENU</button>
+</div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
